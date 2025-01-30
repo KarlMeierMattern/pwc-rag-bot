@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment
+.env
+.venv/
+env/
+venv/
+ENV/
+.conda/
+
+# Docker
+.docker/
+
+# IDE
+.vscode/
+.idea/
+
+# Models and Cache
+cache/
+cache/models/
+.ollama/
+models/
+**/cache/
+
+# Notebooks (local dev only)
+main.ipynb
+
+# git ls-tree -r HEAD -l | sort -nrk4 | head -10

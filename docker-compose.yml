@@ -1,0 +1,25 @@
+# Using Docker Compose is beneficial when you have multiple services that need to communicate with each other, as it simplifies the management of those services.
+
+# streamlit service:
+# It builds the Streamlit app from your Dockerfile and exposes port 8501.
+# It depends on the qdrant service (meaning Docker will start Qdrant first).
+# Sets the environment variables QDRANT_HOST and QDRANT_PORT for your Streamlit app to know where Qdrant is running.
+# qdrant service:
+# Uses the official Qdrant image and exposes port 6333 for communication with the Streamlit app.
+
+# docker-compose build - Builds (or rebuilds) the Docker images defined in docker-compose.yml file, using the instructions from your Dockerfile.
+# docker-compose up - Starts and runs all the containers defined in your docker-compose.yml file, using the previously built images.
+
+version: "3.8"
+
+services:
+  streamlit:
+    image: my-streamlit-app # builds the image for streamlit app
+    build: .
+    ports:
+      - "8501:8501"
+    environment:
+      - QDRANT_URL=${QDRANT_URL} # references url & api key for qdrant cloud service
+      - QDRANT_API_KEY=${QDRANT_API_KEY}
+    volumes:
+      - .:/app
