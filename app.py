@@ -4,9 +4,11 @@ import streamlit as st
 import os
 from dotenv import load_dotenv
 load_dotenv()
-from embeddings import load_documents, generate_embeddings
-from llama_model import query_with_llama
+from querying import query_with_llama
+from embeddings import generate_embeddings
 from qdrant_client import QdrantClient
+from llama_index.core import SimpleDirectoryReader
+
 
 # Connect to your Qdrant instance
 qdrant_url = os.getenv("QDRANT_URL")
@@ -47,9 +49,19 @@ if uploaded_files:
 # Step 2: Process Uploaded Documents
 st.header("Process and Embed Documents")
 if st.button("Submit"):
-    documents = load_documents()  # Load documents from the directory
-    index = generate_embeddings(documents, client)  # Embed and index them
-    st.session_state['index'] = index  # Store the index in session state
+    # Load documents from the folder using SimpleDirectoryReader
+    loader = SimpleDirectoryReader(
+        input_dir="documents",
+        required_exts=".docx",
+        recursive=True
+    )
+    documents = loader.load_data()  # Load documents from the directory
+    
+    # Generate embeddings for the loaded documents and index them
+    index = generate_embeddings(documents, client)
+    
+    # Store the index in session state for querying later
+    st.session_state['index'] = index
     st.success("Documents processed and embeddings generated ✅!")
 
 # Step 3: Query
@@ -67,15 +79,3 @@ if st.button("Submit Query"):
             st.error("Please process and embed documents before querying.")
     else:
         st.error("Please enter a query before submitting.")
-
-
-# if query:
-#     if 'index' in st.session_state:
-#         index = st.session_state['index']  # Retrieve the stored index
-#         response = query_with_llama(query, index)  # Query the index
-#         response_text = response.response if hasattr(response, 'response') else "No response found"
-#         st.write("Response:", response_text)
-#     else:
-#         st.error("Please process and embed documents before querying.")
-
-
