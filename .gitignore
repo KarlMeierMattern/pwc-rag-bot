@@ -28,4 +28,7 @@ models/
 # Notebooks (local dev only)
 main.ipynb
 
+# Documents folder
+documents/
+
 # git ls-tree -r HEAD -l | sort -nrk4 | head -10
