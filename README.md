@@ -1,4 +1,4 @@
-# PWC RAG Application
+# RAG Application
 
 A Retrieval-Augmented Generation (RAG) application built with Python, Streamlit, and Qdrant. This application allows you to process documents, generate embeddings, and perform semantic search queries using LLaMA Index and Qdrant vector store.
 
