@@ -28,5 +28,6 @@ models/
 # Notebooks (local dev only)
 main.ipynb
 
-
-# git ls-tree -r HEAD -l | sort -nrk4 | head -10
+# Other
+docker.md
+instructions.md

@@ -23,3 +23,5 @@ services:
       - QDRANT_API_KEY=${QDRANT_API_KEY}
     volumes:
       - .:/app
+    env_file:
+      - .env
